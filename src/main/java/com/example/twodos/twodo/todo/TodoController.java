@@ -12,40 +12,40 @@ import java.util.Optional;
 public class TodoController {
     private TodoRepository todoRepository;
 
-    public TodoController(TodoRepository todoRepository){
+    public TodoController(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
     }
-    
+
     @GetMapping
-    public List<Todo> getTodos(){
+    public List<Todo> getTodos() {
         return todoRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Todo> getTodo(@PathVariable long id){
+    public Optional<Todo> getTodo(@PathVariable long id) {
         return todoRepository.findById(id);
     }
 
     @PostMapping
-    public Todo addTodo(@RequestBody Todo todo){
+    public Todo addTodo(@RequestBody Todo todo) {
         return todoRepository.save(todo);
     }
 
     @PutMapping("/{id}")
-    public Todo editTodo(@PathVariable long id, @RequestBody Todo todo){
+    public Todo editTodo(@PathVariable long id, @RequestBody Todo todo) {
         Todo existingTodo = new Todo();
-        try{
+        try {
             existingTodo = todoRepository.findById(id).get();
 
-    }            existingTodo.setTitle(todo.getTitle());
-            existingTodo.setDescription(todo.getDescription());
-            existingTodo.setComplete(todo.isComplete());
-} catch(NoSuchElementException e) {
+            existingTodo.setTitle(todo.getTitle());
+             existingTodo.setDescription(todo.getDescription());
+              existingTodo.setComplete(todo.isComplete());
+        }       catch(NoSuchElementException e){
         System.out.println(e.getMessage());
         existingTodo = todoRepository.save(todo);
-        }
+    }
         return existingTodo;
-
+}
 
 @DeleteMapping("/{id}")
     public void deleteTodo(@PathVariable long id){
