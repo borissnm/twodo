@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("api/todos")
 public class TodoController {
@@ -35,18 +36,18 @@ public class TodoController {
         Todo existingTodo = new Todo();
         try{
             existingTodo = todoRepository.findById(id).get();
-            existingTodo.setTitle(todo.getTitle());
+
+    }            existingTodo.setTitle(todo.getTitle());
             existingTodo.setDescription(todo.getDescription());
             existingTodo.setComplete(todo.isComplete());
-        } catch(NoSuchElementException e) {
-            System.out.println(e.getMessage());
-            existingTodo = todoRepository.save(todo);
+} catch(NoSuchElementException e) {
+        System.out.println(e.getMessage());
+        existingTodo = todoRepository.save(todo);
         }
         return existingTodo;
 
-    }
 
-    @DeleteMapping("/{id}")
+@DeleteMapping("/{id}")
     public void deleteTodo(@PathVariable long id){
         todoRepository.deleteById(id);
     }
