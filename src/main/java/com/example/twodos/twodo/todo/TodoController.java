@@ -36,16 +36,15 @@ public class TodoController {
         Todo existingTodo = new Todo();
         try {
             existingTodo = todoRepository.findById(id).get();
-
             existingTodo.setTitle(todo.getTitle());
-             existingTodo.setDescription(todo.getDescription());
-              existingTodo.setComplete(todo.isComplete());
-        }       catch(NoSuchElementException e){
-        System.out.println(e.getMessage());
-        existingTodo = todoRepository.save(todo);
-    }
+            existingTodo.setDescription(todo.getDescription());
+            existingTodo.setComplete(todo.isComplete());
+        }catch(NoSuchElementException e){
+            System.out.println(e.getMessage());
+            existingTodo = todoRepository.save(todo);
+        }
         return existingTodo;
-}
+    }
 
 @DeleteMapping("/{id}")
     public void deleteTodo(@PathVariable long id){
